@@ -1,0 +1,95 @@
+{% load static %}
+
+<style>
+  .login-container {
+    max-width: 360px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+
+  label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.4rem;
+    color: #555;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    border: 1.8px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #ff6f3c;
+    box-shadow: 0 0 6px #ff6f3caa;
+  }
+
+  button {
+    width: 100%;
+    padding: 0.85rem;
+    font-weight: 700;
+    background-color: #ff6f3c;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    font-size: 1.1rem;
+  }
+
+  button:hover {
+    background-color: #e05a1f;
+  }
+
+  .error-message {
+    color: #e74c3c;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .field-errors {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: -0.6rem;
+    margin-bottom: 0.8rem;
+  }
+</style>
+
+<div class="login-container">
+  <h2>Login to Your Account</h2>
+
+  {% if error_message %}
+    <div class="error-message">{{ error_message }}</div>
+  {% endif %}
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+      {% if field.errors %}
+        <div class="field-errors">{{ field.errors }}</div>
+      {% endif %}
+    {% endfor %}
+    <button type="submit">Login</button>
+  </form>
+
+  <p style="text-align:center; margin-top:1rem;">
+    Don't have an account? <a href="{% url 'recipes:signup' %}">Sign up</a>
+  </p>
+</div>

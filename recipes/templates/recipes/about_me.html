@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>About Me - Padmaja</title>
+  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff8f0;
+      color: #5a2e00;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #d96120;
+      color: white;
+      padding: 50px 20px;
+      text-align: center;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      box-shadow: 0 6px 16px rgba(217, 97, 32, 0.5);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.8rem;
+      font-weight: bold;
+    }
+
+    main {
+      flex: 1;
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Back button styles */
+    .back-button {
+      display: inline-block;
+      margin-bottom: 30px;
+      background-color: #d96120;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: #b84d15;
+    }
+
+    p.intro {
+      font-size: 1.3rem;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    section h3 {
+      font-size: 1.6rem;
+      color: #d96120;
+      margin-bottom: 16px;
+      border-bottom: 2px solid #f0a868;
+      padding-bottom: 6px;
+    }
+
+    .contact-links p {
+      margin: 10px 0;
+      font-size: 1.1rem;
+    }
+
+    .link-button {
+      background-color: #d96120;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+
+    .link-button:hover {
+      background-color: #b84d15;
+    }
+
+    footer {
+      background-color: #f0a868;
+      color: #5a2e00;
+      text-align: center;
+      padding: 20px;
+      font-weight: bold;
+      border-top: 3px solid #d96120;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>About Me</h1>
+  </header>
+
+  <main>
+    
+
+    <p class="intro">
+      Hi, I'm <strong>Padmaja</strong> — a passionate full-stack developer who loves building clean, functional, and responsive web applications. I'm skilled in React, JavaScript, Django, and enjoy delivering impactful digital solutions.
+    </p>
+
+    <section>
+      <h3>Portfolio</h3>
+      <p>
+        <a class="link-button" href="https://padmajapinnika.github.io/portfolio_site/index.html" target="_blank">
+          🔗 View My Portfolio
+        </a>
+      </p>
+    </section>
+
+    <section>
+      <h3>Contact</h3>
+      <div class="contact-links">
+        <p>📧 <a class="link-button" href="mailto:padmajapinnika@gmail.com">Email Me</a></p>
+        <p>💻 <a class="link-button" href="https://github.com/padmajapinnika" target="_blank">GitHub</a></p>
+        <p>🔗 <a class="link-button" href="https://www.linkedin.com/in/pinnika-padmaja-73110b20b/" target="_blank">LinkedIn</a></p>
+      </div>
+    </section>
+    <!-- Back Button -->
+    <a href="{% url 'recipes:recipe_list' %}" class="back-button">← Back to Recipes</a>
+  </main>
+  
+
+  <footer>
+    &copy; 2025 Padmaja Pinnika
+  </footer>
+
+</body>
+</html>

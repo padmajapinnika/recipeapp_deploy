@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+  <title>{{ recipe.title }}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background-color: #f6e1d3; /* very light warm peach */
+      color: #3a2e2e; /* dark brown for text */
+    }
+    .container {
+      background-color: #d96120; /* warm burnt orange */
+      border-radius: 8px;
+      padding: 2rem;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 4px 12px rgba(217, 97, 32, 0.4);
+      color: #fff; /* white text for contrast */
+      position: relative; /* for positioning logout */
+    }
+    img {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      display: block;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    h1 {
+      color: #fff3e0; /* pale orange */
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      margin-top: 2rem;
+      color: #ffb07c; /* soft peach */
+    }
+    ul {
+      padding-left: 1.2rem;
+      color: #ffe8d1; /* light peach */
+    }
+    li {
+      line-height: 1.6;
+    }
+    p strong {
+      color: #fff; /* highlight labels in white */
+    }
+    a {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.6rem 1.2rem;
+      background-color: #ff7f32; /* bright orange */
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      box-shadow: 0 3px 8px rgba(255,127,50,0.6);
+      transition: background-color 0.3s ease;
+    }
+    a:hover {
+      background-color: #e76e28; /* darker orange */
+      box-shadow: 0 4px 12px rgba(231,110,40,0.8);
+    }
+
+    /* Logout button styles and positioning */
+    form.logout-form {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      margin: 0;
+    }
+    form.logout-form button {
+      background-color: #b34a12;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    form.logout-form button:hover {
+      background-color: #8c390e;
+    }
+
+    /* Button for toggle */
+    .toggle-details-btn {
+      background-color: #ff7f32;
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      margin-top: 1.5rem;
+      display: inline-block;
+    }
+    .toggle-details-btn:hover {
+      background-color: #e76e28;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logout form top right -->
+    <form class="logout-form" action="{% url 'recipes:logout' %}" method="post">
+      {% csrf_token %}
+      <button type="submit" aria-label="Logout">Logout</button>
+    </form>
+
+    <h1>{{ recipe.title }}</h1>
+    <img src="{{ recipe.pic.url }}" alt="{{ recipe.title }}" />
+
+    <p><strong>Description:</strong> {{ recipe.description }}</p>
+    <p><strong>Cooking Time:</strong> {{ recipe.cooking_time }} minutes</p>
+    <p><strong>Difficulty:</strong> {{ recipe.difficulty }}</p>
+
+    <!-- Toggle button for Ingredients -->
+    <button class="toggle-details-btn" type="button">Show Ingredients</button>
+    <div class="recipe-details" style="display:none;">
+      <h2>Ingredients</h2>
+      <ul>
+        {% for ri in recipe.recipe_ingredients.all %}
+          <li>{{ ri.ingredient.name }}</li>
+        {% empty %}
+          <li>No ingredients found.</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <a href="{% url 'recipes:recipe_list' %}">← Back to Recipes List</a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleBtn = document.querySelector('.toggle-details-btn');
+      const detailsDiv = document.querySelector('.recipe-details');
+
+      toggleBtn.addEventListener('click', function() {
+        if (detailsDiv.style.display === 'none') {
+          detailsDiv.style.display = 'block';
+          toggleBtn.textContent = 'Hide Ingredients';
+        } else {
+          detailsDiv.style.display = 'none';
+          toggleBtn.textContent = 'Show Ingredients';
+        }
+      });
+    });
+  </script>
+  <script src="{% static 'recipes/js/scripts.js' %}"></script>
+</body>
+</html>

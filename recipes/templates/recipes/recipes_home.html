@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome to My Recipe App</title>
+  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+  <style>
+    /* Reset margin, set base font */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #ff7f32; /* warm medium orange */
+      color: #5a2e00; /* dark burnt orange */
+      margin: 0;
+      padding: 30px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Navigation */
+    .nav-bar {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    .nav-bar a, .nav-bar form button {
+      background-color: #d96120; /* burnt orange */
+      color: #fff;
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(217, 97, 32, 0.4);
+      transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-bar a:hover, .nav-bar form button:hover {
+      background-color: #b34a12;
+      box-shadow: 0 6px 15px rgba(179, 74, 18, 0.7);
+      transform: translateY(-2px);
+    }
+
+    /* Header Hero */
+    header {
+      text-align: center;
+      max-width: 900px;
+      margin-bottom: 3rem;
+    }
+
+    header h1 {
+      font-size: 3.6rem;
+      font-weight: 900;
+      margin: 0;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+      letter-spacing: 2px;
+    }
+
+    header p {
+      font-size: 1.6rem;
+      margin-top: 0.6rem;
+      font-weight: 600;
+      opacity: 0.85;
+      color: #5a2e00;
+    }
+
+    /* Main content card */
+    main {
+      background: #fff3e6; /* light orange cream */
+      max-width: 700px;
+      border-radius: 20px;
+      padding: 40px 35px;
+      box-shadow: 0 8px 20px rgba(163, 80, 15, 0.35);
+      text-align: center;
+      color: #5a2e00;
+      font-size: 1.3rem;
+      font-weight: 500;
+      user-select: text;
+      line-height: 1.7;
+      transition: box-shadow 0.3s ease;
+    }
+
+    main:hover {
+      box-shadow: 0 12px 30px rgba(163, 80, 15, 0.55);
+    }
+
+    /* Call to action button (for future use) */
+    a.button {
+      background-color: #d96120;
+      color: white;
+      padding: 18px 45px;
+      margin: 30px auto 0;
+      border-radius: 30px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 7px 18px rgba(217, 97, 32, 0.7);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    a.button:hover {
+      background-color: #b34a12;
+      box-shadow: 0 10px 30px rgba(179, 74, 18, 0.9);
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    footer {
+      width: 100%;
+      max-width: 900px;
+      text-align: center;
+      padding: 20px 15px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #5a2e00;
+      background: #ffd9b3; /* pale orange */
+      border-top: 4px solid #d96120;
+      user-select: none;
+      margin-top: auto;
+      box-shadow: inset 0 2px 5px rgba(217, 97, 32, 0.2);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+      header p {
+        font-size: 1.3rem;
+      }
+      main {
+        font-size: 1.1rem;
+        padding: 25px 20px;
+        margin: 0 10px 2rem;
+      }
+      .nav-bar {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-bottom: 1.5rem;
+      }
+      .nav-bar a, .nav-bar form button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+      a.button {
+        padding: 15px 35px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav-bar" role="navigation" aria-label="Primary navigation">
+    <a href="{% url 'recipes:recipe_list' %}" aria-label="View all recipes">View All Recipes</a>
+    <a href="{% url 'recipes:add_recipe' %}" aria-label="Add a new recipe">Add a Recipe</a>
+    <a href="{% url 'recipes:about_me' %}" aria-label="About me page">About Me</a>
+    <form method="post" action="{% url 'recipes:logout' %}" style="margin:0;">
+      {% csrf_token %}
+      <button type="submit" aria-label="Logout" 
+        style="
+          background-color: #d96120; 
+          color: white; 
+          border: none; 
+          padding: 0.6rem 1.4rem; 
+          border-radius: 8px; 
+          font-weight: 700; 
+          cursor: pointer; 
+          transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+          box-shadow: 0 4px 8px rgba(217, 97, 32, 0.4);
+        " 
+        onmouseover="this.style.backgroundColor='#b34a12'; this.style.boxShadow='0 6px 15px rgba(179, 74, 18, 0.7)'; this.style.transform='translateY(-2px)';"
+        onmouseout="this.style.backgroundColor='#d96120'; this.style.boxShadow='0 4px 8px rgba(217, 97, 32, 0.4)'; this.style.transform='translateY(0)';">
+        Logout
+      </button>
+    </form>
+  </nav>
+
+  <header>
+    <h1>Welcome to My Recipe Collection</h1>
+    <p>Discover delicious recipes to cook every day</p>
+  </header>
+
+  <main>
+    <p>Browse through a variety of recipes — from quick breakfasts to hearty dinners and everything in between. Start exploring now and elevate your cooking experience with easy-to-follow, tasty recipes crafted for everyone.</p>
+  </main>
+
+  <footer>
+    &copy; 2025 My Recipe App. All rights reserved.
+  </footer>
+
+  <script src="{% static 'recipes/js/scripts.js' %}"></script>
+</body>
+</html>

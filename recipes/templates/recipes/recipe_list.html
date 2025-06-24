@@ -1,0 +1,284 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+  <meta charset="UTF-8" />
+  <title>Recipe Overview</title>
+  <style>
+  body {
+  font-family: Arial, sans-serif;
+  background-color: #ff7f32; /* warm medium orange */
+  padding: 20px;
+  color: #5a2e00; /* dark burnt orange text for contrast */
+  margin: 0;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.nav-bar a {
+  background-color: #d96120; /* burnt orange */
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.nav-bar a:hover {
+  background-color: #b34a12;
+}
+
+.welcome-text {
+  font-weight: 500;
+  color: #5a2e00;
+}
+
+h1 {
+  text-align: center;
+  color: #fff3e0; /* light peach */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.search-form input,
+.search-form select,
+.search-form button {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #f0a868; /* peachy border */
+  color: #5a2e00;
+}
+
+.search-form button {
+  background-color: #d96120; /* burnt orange */
+  color: white;
+  font-weight: bold;
+  border: none;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.search-form button:hover {
+  background-color: #b34a12;
+}
+
+.chart-section {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.chart-section h2 {
+  color: #d96120;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.chart-section img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(255,127,50,0.3);
+}
+
+.recipe-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.recipe-card {
+  background-color: #fff3e0; /* very light peach */
+  padding: 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(255,127,50,0.3);
+  transition: transform 0.3s ease;
+}
+
+.recipe-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(217, 97, 32, 0.4);
+}
+
+.recipe-card h3 {
+  color: #d96120;
+  margin-bottom: 0.5rem;
+}
+
+.recipe-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(217, 97, 32, 0.2);
+  margin-bottom: 0.8rem;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.recipe-card img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(217, 97, 32, 0.4);
+}
+
+.recipe-card p {
+  margin: 0.3rem 0 1rem;
+  color: #5a2e00;
+}
+
+.recipe-card a {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  background-color: #d96120;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.recipe-card a:hover {
+  background-color: #b34a12;
+}
+
+.back-button {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.back-button a {
+  padding: 0.6rem 1.2rem;
+  background-color: #d96120;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: background-color 0.3s ease;
+}
+
+.back-button a:hover {
+  background-color: #b34a12;
+}
+
+@media (max-width: 600px) {
+  .recipe-list {
+    grid-template-columns: 1fr;
+  }
+  .recipe-card img {
+    max-width: 100px;
+  }
+  .search-form {
+    flex-direction: column;
+  }
+  .search-form button {
+    width: 100%;
+  }
+  .nav-bar {
+    justify-content: center;
+  }
+}
+.back-to-home {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.back-to-home a {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  background-color: #d96120; /* burnt orange */
+  color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  box-shadow: 0 4px 8px rgba(217, 97, 32, 0.4);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-to-home a:hover,
+.back-to-home a:focus {
+  background-color: #b34a12;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(179, 74, 18, 0.6);
+  outline: none;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Navigation bar with welcome and logout -->
+  <div class="nav-bar">
+    <a href="{% url 'recipes:logout' %}">Logout</a>
+  </div>
+
+  <h1>Recipe Overview</h1>
+
+  <!-- Search Form -->
+  <form class="search-form" method="GET" action="{% url 'recipes:recipe_search' %}">
+    <input 
+      type="text" 
+      name="query" 
+      placeholder="Search recipes by title or ingredient..." 
+      value="{{ request.GET.query|default_if_none:'' }}"
+      aria-label="Search recipes"
+    />
+    <select name="chart_type" aria-label="Select chart type">
+      <option value="" {% if not request.GET.chart_type %}selected{% endif %}>Select chart type</option>
+      <option value="bar" {% if request.GET.chart_type == 'bar' %}selected{% endif %}>Bar Chart</option>
+      <option value="pie" {% if request.GET.chart_type == 'pie' %}selected{% endif %}>Pie Chart</option>
+      <option value="line" {% if request.GET.chart_type == 'line' %}selected{% endif %}>Line Chart</option>
+    </select>
+    <button type="submit">Search</button>
+  </form>
+
+  <!-- Chart Section -->
+  {% if chart %}
+    <div class="chart-section">
+      <h2>Chart Overview</h2>
+      <img src="data:image/png;base64,{{ chart }}" alt="Chart" />
+    </div>
+  {% endif %}
+
+  <!-- Recipes Grid -->
+  <div class="recipe-list">
+    {% for recipe in recipes %}
+      <div class="recipe-card">
+        <h3>{{ recipe.title }}</h3>
+        {% if recipe.pic %}
+          <img src="{{ recipe.pic.url }}" alt="{{ recipe.title }}" />
+        {% endif %}
+        <p><strong>Cooking Time:</strong> {{ recipe.cooking_time }} minutes</p>
+        <a href="{% url 'recipes:recipe_detail' recipe.id %}">View Details</a>
+      </div>
+    {% empty %}
+      <p>No recipes found.</p>
+    {% endfor %}
+  </div>
+<div class="back-to-home">
+  <a href="{% url 'recipes:home' %}" class="btn btn-primary">← Back to Home</a>
+</div>
+
+
+
+  <script src="{% static 'recipes/js/scripts.js' %}"></script>
+</body>
+</html>

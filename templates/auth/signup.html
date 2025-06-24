@@ -1,0 +1,127 @@
+{% load static %}
+
+<style>
+  body {
+    background: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  .signup-container {
+    max-width: 400px;
+    width: 100%;
+    margin: 2rem auto;
+    padding: 2.5rem 2rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .signup-container:hover {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  }
+
+  h2 {
+    margin-bottom: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+  }
+
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: #555;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  input[type="email"] {
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    border: 1.8px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.25s ease;
+  }
+
+  input[type="text"]:focus,
+  input[type="password"]:focus,
+  input[type="email"]:focus {
+    outline: none;
+    border-color: #ff6f3c;
+    box-shadow: 0 0 6px #ff6f3caa;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    background-color: #ff6f3c;
+    color: white;
+    padding: 0.85rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 1.2rem;
+    transition: background-color 0.3s ease;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #e05a1f;
+  }
+
+  .errorlist {
+    margin-top: 0.3rem;
+    margin-bottom: 0.7rem;
+    color: #e74c3c;
+    font-size: 0.9rem;
+  }
+
+  p {
+    text-align: center;
+    margin-top: 1.4rem;
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  p a {
+    color: #ff6f3c;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  p a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+{% block title %}Sign Up | Recipe App{% endblock %}
+
+{% block content %}
+<div class="signup-container">
+  <h2>Create an account</h2>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+      <div>
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+          <div class="errorlist">{{ field.errors }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <button type="submit">Sign Up</button>
+  </form>
+  <p>
+    Already have an account? <a href="{% url 'recipes:login' %}">Login here</a>
+  </p>
+</div>
+{% endblock %}

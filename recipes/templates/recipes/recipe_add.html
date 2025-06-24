@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Add Recipe</title>
+<style>
+  /* Base body and font */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ff7f32 0%, #d96120 100%);
+    color: #5a2e00;
+    margin: 0;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+  
+  /* Form container card */
+  .form-container {
+    background: #fff3e0;
+    padding: 40px 50px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    max-width: 600px;
+    width: 100%;
+  }
+
+  /* Header style */
+  h2 {
+    text-align: center;
+    font-size: 2.75rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(45deg, #d96120, #b34a12);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    letter-spacing: 1.1px;
+  }
+
+  /* Label style */
+  label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #5a2e00;
+  }
+
+  /* Form fields */
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  input[type="file"] {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 2px solid #f0a868;
+    color: #5a2e00;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    outline-offset: 2px;
+    resize: vertical;
+    margin-bottom: 20px;
+  }
+
+  /* Focus effect for inputs */
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  textarea:focus,
+  input[type="file"]:focus {
+    border-color: #d96120;
+    box-shadow: 0 0 8px rgba(217, 97, 32, 0.5);
+  }
+
+  /* Ingredients container */
+  .ingredients-list {
+    max-height: 240px;
+    overflow-y: auto;
+    border: 2px solid #f0a868;
+    border-radius: 12px;
+    background-color: #fff8f0;
+    padding: 15px 20px;
+    margin-bottom: 30px;
+  }
+
+  /* Individual ingredient label and checkbox */
+  .ingredients-list label {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    color: #5a2e00;
+    transition: color 0.3s ease;
+  }
+
+  .ingredients-list label:hover {
+    color: #d96120;
+  }
+
+  .ingredients-list input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #d96120;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #d96120;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .ingredients-list input[type="checkbox"]:focus-visible {
+    outline-offset: 2px;
+    outline-color: #b34a12;
+  }
+
+  /* Submit button */
+  button[type="submit"] {
+    width: 100%;
+    background-color: #d96120;
+    color: white;
+    font-weight: 700;
+    padding: 14px 0;
+    font-size: 1.25rem;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(217, 97, 32, 0.6);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  button[type="submit"]:hover,
+  button[type="submit"]:focus {
+    background-color: #b34a12;
+    box-shadow: 0 8px 18px rgba(179, 74, 18, 0.8);
+  }
+
+  /* Cancel button */
+  .btn-cancel {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+    padding: 14px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #999999;
+    color: white;
+    border-radius: 14px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(153, 153, 153, 0.6);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .btn-cancel:hover,
+  .btn-cancel:focus {
+    background-color: #666666;
+    box-shadow: 0 6px 12px rgba(102, 102, 102, 0.8);
+  }
+
+  /* Responsive tweak */
+  @media (max-width: 640px) {
+    .form-container {
+      padding: 30px 20px;
+      margin: 0 10px;
+    }
+
+    h2 {
+      font-size: 2rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>Add a New Recipe</h2>
+   {% if messages %}
+    <ul style="list-style: none; padding: 0; margin-bottom: 20px;">
+      {% for message in messages %}
+        <li style="
+            background-color: #e0ffe5;
+            color: #215732;
+            padding: 12px 20px;
+            border-left: 6px solid #2ecc71;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-weight: 600;">
+          {{ message }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <label for="{{ form.title.id_for_label }}">Title:</label>
+    {{ form.title.errors }}
+    {{ form.title }}
+
+    <label for="{{ form.description.id_for_label }}">Description:</label>
+    {{ form.description.errors }}
+    {{ form.description }}
+
+    <label for="{{ form.cooking_time.id_for_label }}">Cooking time (minutes):</label>
+    {{ form.cooking_time.errors }}
+    {{ form.cooking_time }}
+
+    <label for="{{ form.pic.id_for_label }}">Pic:</label>
+    {{ form.pic.errors }}
+    {{ form.pic }}
+
+    <h3>Select Ingredients:</h3>
+    <div class="ingredients-list" tabindex="0" aria-label="List of available ingredients">
+      {% for ingredient in ingredients %}
+        <label>
+          <input type="checkbox" name="ingredients" value="{{ ingredient.id }}">
+          {{ ingredient.name }}
+        </label>
+      {% endfor %}
+    </div>
+
+    <button type="submit">Submit Recipe</button>
+  </form>
+
+  <a href="{% url 'recipes:home' %}" class="btn-cancel" role="button" aria-label="Cancel adding recipe and go back">Cancel</a>
+</div>
+
+</body>
+</html>
